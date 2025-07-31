@@ -11,6 +11,8 @@ libeigen3-dev libzmq3-dev libboost-all-dev python3-pybind11 python3-pip \
 && apt-get clean && \
 rm -rf /var/lib/apt/lists/*
 
+
+
 # Install Meslo Fonts
 RUN wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Meslo.zip \
 && cd ~/.local/share/fonts \
