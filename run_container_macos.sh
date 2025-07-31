@@ -16,5 +16,5 @@ fi
 
 xhost +local:root
 docker run -it \
---rm --env=DISPLAY=docker.for.mac.host.internal:0 --volume /tmp/.X11-unix:/tmp/.X11-unix --privileged --network=host --ipc=host  \
+--rm --env DISPLAY=$DISPLAY --volume /tmp/.X11-unix:/tmp/.X11-unix --privileged --network=host --ipc=host  \
 --name=$1 $2 /bin/bash
