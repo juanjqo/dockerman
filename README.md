@@ -3,3 +3,32 @@
 # dockerman
 
 <img src="https://github.com/user-attachments/assets/b98f225f-1aba-4ebf-bb5a-cfbd056b9113" alt="drawing" width="250"/>
+
+
+## Docker Hub Instructions
+
+|Images | Platform | pulls | Description |
+|----------------- |-------|--------|--------|
+|ubuntu_dev| ![Static Badge](https://img.shields.io/badge/linux-amd64-orange)![Static Badge](https://img.shields.io/badge/arm64-blue)| pulls |Ubuntu for devs|
+
+```shell
+docker run juanjqo/ubuntu_dev
+```
+
+## Instructions for local tests
+
+Clone and build:
+
+```shell
+cd ~/Downloads
+git clone https://github.com/juanjqo/dockerman.git --recursive
+cd ~/dockerman
+docker build -t ubuntu_dev images/ubuntu_dev/
+```
+
+## Run
+
+```shell
+sh run_container.sh ubuntu_dev ubuntu_dev
+```
+
