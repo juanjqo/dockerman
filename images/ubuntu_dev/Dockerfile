@@ -17,6 +17,7 @@ RUN mkdir -p ~/git/ && cd ~/git/ && git clone https://github.com/juanjqo/dockerm
 
 # Setting QtCreator
 RUN mkdir -p /root/.config/QtProject && cp /root/git/dockerman/config/QtCreator.ini /root/.config/QtProject/
+RUN mkdir -p /root/.config/QtProject/qtcreator/styles/ && cp /root/git/dockerman/config/modnokai_Juancho.xml /root/.config/QtProject/qtcreator/styles/
 
 # [Terminal]
 # ShellPath=/usr/bin/bash
