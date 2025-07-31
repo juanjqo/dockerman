@@ -11,8 +11,13 @@ libeigen3-dev libzmq3-dev libboost-all-dev python3-pybind11 python3-pip \
 && apt-get clean && \
 rm -rf /var/lib/apt/lists/*
 
+
+# Clone dockerman
+RUN mkdir -p ~/git/ && cd ~/git/ && git clone https://github.com/juanjqo/dockerman.git --recursive
+
 # Setting QtCreator
-RUN qtcreator || exit 1 
+RUN mkdir /root/.config/QtProject && cp /root/git/dockerman/config/QtCreator.ini /root/.config/QtProject/
+
 # [Terminal]
 # ShellPath=/usr/bin/bash
 
