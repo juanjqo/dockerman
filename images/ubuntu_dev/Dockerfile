@@ -11,6 +11,16 @@ libeigen3-dev libzmq3-dev libboost-all-dev python3-pybind11 python3-pip \
 && apt-get clean && \
 rm -rf /var/lib/apt/lists/*
 
+# Setting QtCreator
+RUN qtcreator || exit 1 
+# [Terminal]
+# ShellPath=/usr/bin/bash
+
+# cd /root/.config/QtProject
+# sed -i -e 's/option(BUILD_SHARED_LIBS "If ON, build shared library instead of static" OFF)/option(BUILD_SHARED_LIBS "If ON, build shared library instead of static" ON)/g' CMakeLists.txt
+# sed -i -e 's/option(BUILD_SHARED_LIBS "If ON, build shared library instead of static" OFF)/option(BUILD_SHARED_LIBS "If ON, build shared library instead of static" ON)/g' QtCreator.ini
+
+
 
 
 # Install Meslo Fonts
