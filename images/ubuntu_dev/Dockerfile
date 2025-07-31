@@ -16,7 +16,7 @@ rm -rf /var/lib/apt/lists/*
 RUN mkdir -p ~/git/ && cd ~/git/ && git clone https://github.com/juanjqo/dockerman.git --recursive
 
 # Setting QtCreator
-RUN mkdir /root/.config/QtProject && cp /root/git/dockerman/config/QtCreator.ini /root/.config/QtProject/
+RUN mkdir -p /root/.config/QtProject && cp /root/git/dockerman/config/QtCreator.ini /root/.config/QtProject/
 
 # [Terminal]
 # ShellPath=/usr/bin/bash
