@@ -1,4 +1,4 @@
-![GitHub License](https://img.shields.io/github/license/juanjqo/dockerman)
+![GitHub License](https://img.shields.io/github/license/juanjqo/dockerman)[![publish](https://github.com/juanjqo/dockerman/actions/workflows/docker-image.yml/badge.svg)](https://github.com/juanjqo/dockerman/actions/workflows/docker-image.yml)
 
 # dockerman
 
