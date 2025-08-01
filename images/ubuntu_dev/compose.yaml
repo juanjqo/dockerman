@@ -1,0 +1,18 @@
+services:
+  ubuntu_dev:
+    build:
+      context: ./
+      dockerfile: ./images/ubuntu_dev/Dockerfile
+    # Optional: You can name the built image if needed
+    # image: my_ubuntu_dev_image
+    environment:
+      DISPLAY: host.docker.internal:0
+      QT_X11_NO_MITSHM: "1"
+    privileged: true
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ~/.Xauthority:/root/.Xauthority
+    network_mode: host
+    stdin_open: true
+    tty: true
+    command: qtcreator
