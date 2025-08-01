@@ -1,10 +1,11 @@
 FROM ubuntu:noble
 SHELL ["/bin/bash", "-c"]
 ENV BASH_ENV="/etc/bash_env"
+ARG TARGETARCH
 
 # Install dependencies for development
 RUN apt-get update && apt-get install -y build-essential net-tools iputils-ping \
-git nss-updatedb locate curl libpci3 vim nano terminator unzip wget \
+git nss-updatedb locate curl libpci3 vim nano terminator unzip wget gpg apt-transport-https \
 cmake extra-cmake-modules g++ fakeroot software-properties-common libxcb-cursor0 libxcb-cursor-dev \
 xorg-dev libwayland-dev libxkbcommon-dev wayland-protocols gedit \
 libeigen3-dev libzmq3-dev libboost-all-dev python3-pybind11 python3-pip thunar mc\
@@ -24,9 +25,24 @@ RUN apt-get update && apt-get install -y qtcreator \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Install VSCode
+# Detect architecture and set variables
+RUN echo "Installing VSCode for architecture: ${TARGETARCH}" && \
+    GPG_KEY="/usr/share/keyrings/packages.microsoft.gpg" && \
+    mkdir -p /usr/share/keyrings/ && \
+    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > ${GPG_KEY} && \
+    echo "deb [arch=${TARGETARCH} signed-by=${GPG_KEY}] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list && \
+    apt-get update && \
+    apt-get install -y code && \
+    echo 'alias vscode="code --no-sandbox --user-data-dir=/tmp/vscode"' >> /etc/bash.bashrc
+ 
 
 # Clone dockerman
 RUN mkdir -p ~/git/ && cd ~/git/ && git clone https://github.com/juanjqo/dockerman.git --recursive
+
+# Add custom functions 
+RUN chmod +x ~/git/dockerman/dependencies/scripts/custom_functions.sh
+RUN bash -c '~/git/dockerman/dependencies/scripts/custom_functions.sh'
 
 # Clone docker_recipes
  RUN mkdir -p ~/git/ && cd ~/git/ && git clone https://github.com/Adorno-Lab/docker_recipes.git --recursive
