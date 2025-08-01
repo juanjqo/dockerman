@@ -10,7 +10,7 @@ Some Docker images for development on DQ Robotics, ROS2, and more.
 
 |Images | Platform | Host SO | pulls | Description |
 |----------------- |-------|--------|--------|--------|
-|ubuntu_dev| ![Static Badge](https://img.shields.io/badge/linux-amd64-orange)![Static Badge](https://img.shields.io/badge/arm64-blue)| ![Static Badge](https://img.shields.io/badge/macOS-magenta)![Static Badge](https://img.shields.io/badge/ubuntu-blue) |pulls |Ubuntu with ROS2 Jazzy, libraries and QtCreator|
+|ubuntu_dev| ![Static Badge](https://img.shields.io/badge/linux-amd64-orange)![Static Badge](https://img.shields.io/badge/arm64-blue)| ![Static Badge](https://img.shields.io/badge/macOS-magenta)![Static Badge](https://img.shields.io/badge/ubuntu-blue) | ![Docker Pulls](https://img.shields.io/docker/pulls/juanjqo/ubuntu_dev)|Ubuntu with ROS2 Jazzy, libraries and QtCreator|
 
 ```shell
 docker run juanjqo/ubuntu_dev
