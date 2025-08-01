@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y build-essential net-tools iputils-ping 
 git nss-updatedb locate curl libpci3 vim nano terminator unzip wget \
 cmake extra-cmake-modules g++ fakeroot software-properties-common libxcb-cursor0 libxcb-cursor-dev \
 xorg-dev libwayland-dev libxkbcommon-dev wayland-protocols gedit \
-libeigen3-dev libzmq3-dev libboost-all-dev python3-pybind11 python3-pip \
+libeigen3-dev libzmq3-dev libboost-all-dev python3-pybind11 python3-pip thunar mc\
 && apt-get clean && \
 rm -rf /var/lib/apt/lists/*
 
@@ -28,18 +28,24 @@ RUN apt-get update && apt-get install -y qtcreator \
 # Clone dockerman
 RUN mkdir -p ~/git/ && cd ~/git/ && git clone https://github.com/juanjqo/dockerman.git --recursive
 
+# Clone docker_recipes
+ RUN mkdir -p ~/git/ && cd ~/git/ && git clone https://github.com/Adorno-Lab/docker_recipes.git --recursive
+
+# Install ROS2 Jazzy. 
+RUN chmod +x ~/git/docker_recipes/dependencies/install_ros_jazzy.sh
+RUN bash -c '~/git/docker_recipes/dependencies/install_ros_jazzy.sh'
+
+# Install SAS
+RUN curl -s --compressed "https://smartarmstack.github.io/smart_arm_stack_ROS2/KEY.gpg" \
+| gpg --dearmor \
+| sudo tee /etc/apt/trusted.gpg.d/smartarmstack_lgpl.gpg >/dev/null \
+&& curl -s --compressed -o /etc/apt/sources.list.d/smartarmstack_lgpl.list \
+"https://smartarmstack.github.io/smart_arm_stack_ROS2/smartarmstack_lgpl.list" \
+&& apt update && apt-get install ros-jazzy-sas-* -y
+
 # Setting QtCreator
 RUN mkdir -p /root/.config/QtProject && cp /root/git/dockerman/config/QtCreator.ini /root/.config/QtProject/
 RUN mkdir -p /root/.config/QtProject/qtcreator/styles/ && cp /root/git/dockerman/config/modnokai_Juancho.xml /root/.config/QtProject/qtcreator/styles/
-
-# [Terminal]
-# ShellPath=/usr/bin/bash
-
-# cd /root/.config/QtProject
-# sed -i -e 's/option(BUILD_SHARED_LIBS "If ON, build shared library instead of static" OFF)/option(BUILD_SHARED_LIBS "If ON, build shared library instead of static" ON)/g' CMakeLists.txt
-# sed -i -e 's/option(BUILD_SHARED_LIBS "If ON, build shared library instead of static" OFF)/option(BUILD_SHARED_LIBS "If ON, build shared library instead of static" ON)/g' QtCreator.ini
-
-
 
 
 # Install Meslo Fonts
