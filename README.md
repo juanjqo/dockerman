@@ -4,7 +4,7 @@
 
 Some Docker images for development on DQ Robotics, ROS2, and more.
 
-<img src="https://github.com/user-attachments/assets/5811197a-c725-49d4-927c-22feae49164c" alt="drawing" width="250"/>
+<img src="https://github.com/user-attachments/assets/5811197a-c725-49d4-927c-22feae49164c" alt="drawing" width="280"/>
 
 ## Docker Hub Instructions
 
