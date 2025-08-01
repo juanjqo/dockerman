@@ -1,0 +1,14 @@
+  services:
+    ubuntu_dev:
+      #image: murilomarinho/coppeliasim:noble_470rev4
+      build: https://github.com/juanjqo/dockerman.git#main:images/ubuntu_dev
+      #platform: linux/amd64
+      #stop_signal: SIGINT
+      environment:
+        DISPLAY: $DISPLAY # x server related
+      privileged: true # Needed for some gpu configurations.
+      volumes:
+        - /tmp/.X11-unix:/tmp/.X11-unix # x server related
+        - ~/.Xauthority:/root/.Xauthority # x server related
+      network_mode: "host" # x server related
+      command: /bin/bash -c "
