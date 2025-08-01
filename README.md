@@ -28,7 +28,14 @@ docker build -t ubuntu_dev images/ubuntu_dev/
 ```
 
 ## Run
-
+#### Ubuntu
+```shell
+chmod +x run_container.sh
+```
+```shell
+./run_container.sh ubuntu_dev ubuntu_dev
+```
+#### macOS
 ```shell
 sh run_container.sh ubuntu_dev ubuntu_dev
 ```
