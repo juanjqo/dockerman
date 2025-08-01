@@ -1,11 +1,10 @@
-![GitHub License](https://img.shields.io/github/license/juanjqo/dockerman)
+![GitHub License](https://img.shields.io/github/license/juanjqo/dockerman)[![publish](https://github.com/juanjqo/dockerman/actions/workflows/docker-image.yml/badge.svg)](https://github.com/juanjqo/dockerman/actions/workflows/docker-image.yml)
 
 # dockerman
 
 Some Docker images for development on DQ Robotics, ROS2, and more.
 
-<img src="https://github.com/user-attachments/assets/b98f225f-1aba-4ebf-bb5a-cfbd056b9113" alt="drawing" width="250"/>
-
+<img src="https://github.com/user-attachments/assets/5811197a-c725-49d4-927c-22feae49164c" alt="drawing" width="280"/>
 
 ## Docker Hub Instructions
 
