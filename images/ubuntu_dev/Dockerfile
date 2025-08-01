@@ -41,8 +41,8 @@ RUN echo "Installing VSCode for architecture: ${TARGETARCH}" && \
 RUN mkdir -p ~/git/ && cd ~/git/ && git clone https://github.com/juanjqo/dockerman.git --recursive
 
 # Add custom functions 
-RUN chmod +x ~/git/dockerman/dependencies/scripts/custom_functions.sh
-RUN bash -c '~/git/dockerman/dependencies/scripts/custom_functions.sh'
+RUN chmod +x ~/git/dockerman/scripts/custom_functions.sh
+RUN bash -c '~/git/dockerman/scripts/custom_functions.sh'
 
 # Clone docker_recipes
  RUN mkdir -p ~/git/ && cd ~/git/ && git clone https://github.com/Adorno-Lab/docker_recipes.git --recursive
@@ -54,7 +54,7 @@ RUN bash -c '~/git/docker_recipes/dependencies/install_ros_jazzy.sh'
 # Install SAS
 RUN curl -s --compressed "https://smartarmstack.github.io/smart_arm_stack_ROS2/KEY.gpg" \
 | gpg --dearmor \
-| sudo tee /etc/apt/trusted.gpg.d/smartarmstack_lgpl.gpg >/dev/null \
+| tee /etc/apt/trusted.gpg.d/smartarmstack_lgpl.gpg >/dev/null \
 && curl -s --compressed -o /etc/apt/sources.list.d/smartarmstack_lgpl.list \
 "https://smartarmstack.github.io/smart_arm_stack_ROS2/smartarmstack_lgpl.list" \
 && apt update && apt-get install ros-jazzy-sas-* -y
