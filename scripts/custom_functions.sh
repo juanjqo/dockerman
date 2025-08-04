@@ -44,7 +44,7 @@ build_from_github() {
         cleanbuild || { echo "⚠️ cleanbuild failed, continuing anyway..."; }
     else
         echo "→ Cloning repository..."
-        git clone "$url" || return 1
+        git clone "$url" --recursive || return 1
         cd "$repo_name" || { echo "❌ Failed to enter $repo_name directory"; return 1; }
     fi
 
