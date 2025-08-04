@@ -24,4 +24,31 @@ cleanbuild() {
     cd .. && rm -rf build || { echo "❌ Failed to remove build directory"; return 1; };
     echo "✅ Build cleanup complete!";
 }
+build_from_github() {
+    if [[ -z "$1" ]]; then
+        echo "❌ Usage: build_from_github <GitHub_HTTPS_Link>"
+        return 1
+    fi
+
+    local url="$1"
+    local repo_name
+    repo_name=$(basename "$url" .git)
+
+    echo "→ Preparing to clone or rebuild $repo_name..."
+    mkdir -p ~/utils || return 1
+    cd ~/utils || return 1
+
+    if [[ -d "$repo_name" ]]; then
+        echo "⚠️ Directory '$repo_name' already exists. Performing clean rebuild..."
+        cd "$repo_name" || { echo "❌ Failed to enter $repo_name directory"; return 1; }
+        cleanbuild || { echo "⚠️ cleanbuild failed, continuing anyway..."; }
+    else
+        echo "→ Cloning repository..."
+        git clone "$url" || return 1
+        cd "$repo_name" || { echo "❌ Failed to enter $repo_name directory"; return 1; }
+    fi
+
+    echo "→ Building with buildme()..."
+    buildme
+}
 EOF
