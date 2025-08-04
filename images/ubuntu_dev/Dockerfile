@@ -74,7 +74,8 @@ RUN wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/release
 
 # Install oh-my-posh
 RUN curl -s https://ohmyposh.dev/install.sh | bash -s && echo "export PATH=$PATH:/root/.local/bin" >> /etc/bash_env
-RUN echo "eval "$(oh-my-posh init bash)"" >> /etc/bash_env && exec bash && oh-my-posh font install meslo
+RUN echo 'eval "$(oh-my-posh init bash)"' >> /etc/bash_env
+#RUN echo "eval "$(oh-my-posh init bash)"" >> /etc/bash_env && exec bash && oh-my-posh font install meslo
 #RUN source ~/.bashrc && oh-my-posh font install meslo
 #RUN echo "eval "$(oh-my-posh init bash)"" >> /etc/bash_env
 
