@@ -1,31 +1,48 @@
 name: publish
 
-on: [push, pull_request, workflow_dispatch]
+# Based on https://github.com/UoMMScRobotics/SFR_ROS2/blob/main/.github/workflows/main.yml
+on:
+  push:
+    branches: ['main']
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ubuntu_dev  
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build-and-push-image:
     strategy:
       fail-fast: false
+      matrix:
+          os: ['ubuntu-24.04-arm', 'ubuntu-latest']  
+    runs-on: ${{ matrix.os }}      
 
     steps:
-          - uses: actions/checkout@v2
           - name: Log in to Docker Hub
             uses: docker/login-action@v3
             with:
              username: ${{ vars.DOCKER_USERNAME }}
              password: ${{ secrets.DOCKER_PASSWORD }}
-
-          - name: Set up QEMU
-            uses: docker/setup-qemu-action@v3
     
           - name: Set up Docker Buildx
             uses: docker/setup-buildx-action@v3    
        
-          - name: Build and push ubuntu_dev
+          - name: Build and push ubuntu_dev amd64
+            if: matrix.os == 'ubuntu-latest'
+            id: push_amd64
             uses: docker/build-push-action@v6
             with:
-              platforms: linux/amd64,linux/arm64
+              platforms: linux/amd64
               push: true
               file: images/ubuntu_dev/Dockerfile
-              tags: ${{ vars.DOCKER_USERNAME }}/ubuntu_dev
+              tags: ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:amd64
+              
+          - name: Build and push ubuntu_dev amd64
+            if: matrix.os == 'ubuntu-24.04-arm'
+            id: push_arm64
+            uses: docker/build-push-action@v6
+            with:
+              platforms: linux/arm64
+              push: true
+              file: images/ubuntu_dev/Dockerfile
+              tags: ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:arm64    
