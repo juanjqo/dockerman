@@ -16,13 +16,7 @@ jobs:
           os: ['ubuntu-latest']  #'ubuntu-24.04-arm', 
     runs-on: ${{ matrix.os }}      
 
-    steps:
-          - name: Checkout repository
-            uses: actions/checkout@v2
-
-          - name: Create output folder
-            run: mkdir -p output
-          
+    steps:          
           - name: Log in to Docker Hub
             uses: docker/login-action@v3
             with:
@@ -34,15 +28,19 @@ jobs:
             with:
               driver: docker
 
-          - name: Build and save ubuntu_dev amd64
+          - name: Checkout repository
+            uses: actions/checkout@v2
+
+          - name: Create output folder
+            run: mkdir -p output    
+
+          - name: Build and save ubuntu_dev AMD64
             if: matrix.os ==  'ubuntu-latest'
             id: build_amd64
-            uses: docker/build-push-action@v6
-            with:
-              push: False
-              file: images/ubuntu_dev/Dockerfile
-              tags: ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:amd64
-              outputs: type=docker, dest=./output/${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}-amd64.tar
+          - run: |
+              docker build -t ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:amd64 ../images/ubuntu_dev/
+              docker image save -o ./output/${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}-amd64.tar
+           
 
           - name: Upload amd64 image
             if: matrix.os == 'ubuntu-latest'
