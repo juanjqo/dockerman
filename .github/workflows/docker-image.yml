@@ -44,7 +44,7 @@ jobs:
             uses: actions/upload-artifact@v4
             with:
               name: ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:amd64
-              path: ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}-amd64.tar 
+              path: ./${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}-amd64.tar 
 
 
           
