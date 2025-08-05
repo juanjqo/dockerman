@@ -31,7 +31,6 @@ jobs:
             id: push_amd64
             uses: docker/build-push-action@v6
             with:
-              platforms: linux/amd64
               push: true
               file: images/ubuntu_dev/Dockerfile
               tags: ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:amd64
@@ -41,7 +40,6 @@ jobs:
             id: push_arm64
             uses: docker/build-push-action@v6
             with:
-              platforms: linux/arm64
               push: true
               file: images/ubuntu_dev/Dockerfile
               tags: ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:arm64    
