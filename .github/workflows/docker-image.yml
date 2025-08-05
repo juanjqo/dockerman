@@ -39,7 +39,7 @@ jobs:
             id: build_amd64
             run: |
               ls
-              docker build -t ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:amd64 ../images/ubuntu_dev/
+              docker build -t ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:amd64 ./images/ubuntu_dev/
               docker image save -o ./output/${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}-amd64.tar
            
 
