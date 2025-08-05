@@ -9,11 +9,11 @@ env:
   IMAGE_NAME: ubuntu_dev  
 
 jobs:
-  build-and-push-image:
+  build-and-upload-artifact-image:
     strategy:
       fail-fast: false
       matrix:
-          os: ['ubuntu-latest']  #'ubuntu-24.04-arm', 
+          os: ['ubuntu-24.04-arm', 'ubuntu-latest']  #'ubuntu-24.04-arm', 
     runs-on: ${{ matrix.os }}      
 
     steps:          
@@ -34,9 +34,9 @@ jobs:
           - name: Create output folder
             run: mkdir -p output  
 
-          - name: Build and push ubuntu_dev amd64
+          - name: Build ubuntu_dev [AMD64]
             if: matrix.os == 'ubuntu-latest'
-            id: push_amd64
+            id: build_amd64
             uses: docker/build-push-action@v6
             with:
               push: False
@@ -45,8 +45,7 @@ jobs:
               tags: ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:amd64
               outputs: type=docker, dest=${{ env.IMAGE_NAME }}-amd64.tar
            
-
-          - name: Upload amd64 image
+          - name: Upload artifact [AMD64]
             if: matrix.os == 'ubuntu-latest'
             id: upload_amd64
             uses: actions/upload-artifact@v4
@@ -54,6 +53,28 @@ jobs:
               name: ${{ env.IMAGE_NAME }}-amd64
               path: ${{ env.IMAGE_NAME }}-amd64.tar 
               retention-days:  1
+
+          - name: Build ubuntu_dev [ARM64]
+            if: matrix.os == 'ubuntu-24.04-arm'
+            id: build_arm64
+            uses: docker/build-push-action@v6
+            with:
+              push: False
+              context: images/ubuntu_dev/
+              file: images/ubuntu_dev/Dockerfile
+              tags: ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:arm64
+              outputs: type=docker, dest=${{ env.IMAGE_NAME }}-arm64.tar
+           
+          - name: Upload artifact [ARM64]
+            if: matrix.os == 'ubuntu-24.04-arm'
+            id: upload_arm64
+            uses: actions/upload-artifact@v4
+            with:
+              name: ${{ env.IMAGE_NAME }}-arm64
+              path: ${{ env.IMAGE_NAME }}-arm64.tar 
+              retention-days:  1     
+
+
 
 
           
