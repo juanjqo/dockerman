@@ -18,7 +18,7 @@ jobs:
 
     steps:
           - name: Checkout repository
-            uses: actions/chekcout@v4
+            uses: actions/checkout@v2
 
           - name: Create output folder
             run: mkdir -p output
