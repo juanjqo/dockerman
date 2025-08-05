@@ -32,6 +32,7 @@ jobs:
             if: matrix.os == 'ubuntu-latest'
             id: build_amd64
             run: |
+             ls -R
              docker build -t ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:amd64 ../images/ubuntu_dev/
              docker save ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:amd64 -o ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}-amd64.tar
 
