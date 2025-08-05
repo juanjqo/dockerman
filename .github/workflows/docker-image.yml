@@ -28,55 +28,40 @@ jobs:
             with:
               driver: docker
        
-          - name: Build and push ubuntu_dev amd64
+          - name: Build and save ubuntu_dev amd64
             if: matrix.os == 'ubuntu-latest'
-            id: push_amd64
-            uses: docker/build-push-action@v6
+            id: build_amd64
+            run: |
+             docker build -t ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:amd64 images/ubuntu_dev/
+             docker save ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:amd64 -o ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}-amd64.tar
+
+          - name: Upload amd64 image
+            if: matrix.os == 'ubuntu-latest'
+            id: upload_amd64
+            uses: actions/upload-artifact@v4
             with:
-              push: True
-              file: images/ubuntu_dev/Dockerfile
-              tags: ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:temp-amd64
-              
-          - name: Build and push ubuntu_dev arm64
+              name: ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:amd64
+              path: ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}-amd64.tar 
+
+          - name: Build and save ubuntu_dev arm64
             if: matrix.os == 'ubuntu-24.04-arm'
-            id: push_arm64
-            uses: docker/build-push-action@v6
+            id: build_arm64
+            run: |
+             docker build -t ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:arm64 images/ubuntu_dev/
+             docker save ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:arm64 -o /tmp/${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}-arm64.tar
+
+          - name: Upload arm64 image
+            if: matrix.os == 'ubuntu-24.04-arm'
+            id: upload_arm64
+            uses: actions/upload-artifact@v4
             with:
-              push: True
-              file: images/ubuntu_dev/Dockerfile
-              tags: ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:temp-arm64   
-
-  create-and-push-manifest:
-    runs-on: ubuntu-latest
-    needs: [build-and-push-image]
-    steps:
-      - name: Set up Docker CLI
-        uses: docker/setup-buildx-action@v3
-        with:
-          install: true
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ vars.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Create and push manifest for latest
-        run: |
-          docker manifest create ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest \
-            --amend ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:temp-amd64 \
-            --amend ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:temp-arm64
-
-          docker manifest push ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+              name: ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:arm64
+              path: ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}-arm64.tar 
           
-      - name: Delete temp tags from Docker Hub
-        run: |
-          curl -s -X DELETE \
-            -u "${{ vars.DOCKER_USERNAME }}:${{ secrets.DOCKER_PASSWORD }}" \
-            https://hub.docker.com/v2/repositories/${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}/tags/temp-amd64/
-          
-          curl -s -X DELETE \
-            -u "${{ vars.DOCKER_USERNAME }}:${{ secrets.DOCKER_PASSWORD }}" \
-            https://hub.docker.com/v2/repositories/${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}/tags/temp-arm64/    
+
+
+
+
+   
 
               
