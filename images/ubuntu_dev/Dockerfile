@@ -65,17 +65,29 @@ RUN mkdir -p /root/.config/QtProject/qtcreator/styles/ && cp /root/git/dockerman
 
 
 # Install Meslo Fonts
-RUN wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Meslo.zip \
-&& cd ~/.local/share/fonts \
-&& unzip Meslo.zip \
-&& rm Meslo.zip \
-&& fc-cache -fv
+#RUN wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Meslo.zip \
+#&& cd ~/.local/share/fonts \
+#&& unzip Meslo.zip \
+#&& rm Meslo.zip \
+#&& fc-cache -fv
 
 
 # Install oh-my-posh
-RUN curl -s https://ohmyposh.dev/install.sh | bash -s && echo "export PATH=$PATH:/root/.local/bin" >> /etc/bash_env
-RUN echo 'eval "$(oh-my-posh init bash)"' >> /etc/bash_env
-RUN echo '[ -f /etc/bash_env ] && source /etc/bash_env' >> /root/.bashrc
+#RUN curl -s https://ohmyposh.dev/install.sh | bash -s \
+#&& export PATH="$PATH:/root/.local/bin" \
+#&& echo "export PATH=$PATH:/root/.local/bin" >> /etc/bash_env \
+#&& echo 'eval "$(oh-my-posh init bash)"' >> /etc/bash_env \
+#&& oh-my-posh font install meslo
+
+# Install oh-my-posh
+RUN curl -s https://ohmyposh.dev/install.sh | bash -s \
+ && export PATH="$PATH:/root/.local/bin" \
+ && echo 'export PATH=$PATH:/root/.local/bin' >> /etc/bash_env \
+ && echo 'eval "$(oh-my-posh init bash)"' >> /etc/bash_env \
+ && oh-my-posh font install meslo
+
+
+#RUN echo '[ -f /etc/bash_env ] && source /etc/bash_env' >> /root/.bashrc
 #RUN echo "eval "$(oh-my-posh init bash)"" >> /etc/bash_env && exec bash && oh-my-posh font install meslo
 #RUN source ~/.bashrc && oh-my-posh font install meslo
 #RUN echo "eval "$(oh-my-posh init bash)"" >> /etc/bash_env
