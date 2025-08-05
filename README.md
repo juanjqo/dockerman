@@ -12,6 +12,10 @@ Some Docker images for development on DQ Robotics, ROS2, and more.
 |----------------- |-------|--------|--------|--------|
 |ubuntu_dev| ![Static Badge](https://img.shields.io/badge/linux-amd64-orange)![Static Badge](https://img.shields.io/badge/arm64-blue)| ![Static Badge](https://img.shields.io/badge/macOS-magenta)![Static Badge](https://img.shields.io/badge/ubuntu-blue) | ![Docker Pulls](https://img.shields.io/docker/pulls/juanjqo/ubuntu_dev)|Ubuntu with ROS2 Jazzy, libraries and QtCreator|
 
+```shell
+docker pull juanjqo/ubuntu_dev
+```
+
 ## Clone this rep
 ```shell
 mkdir -p ~/git && cd ~/git
@@ -19,17 +23,15 @@ git clone https://github.com/juanjqo/dockerman --recursive
 cd dockerman
 ```
 
-### macOS with Apple Silicon:
+### macOS:
 ```shell
-docker pull juanjqo/ubuntu_dev:arm64
-sh run_container.sh ubuntu_dev juanjqo/ubuntu_dev:arm64
+sh run_container.sh ubuntu_dev juanjqo/ubuntu_dev
 ```
 
-### AMD64 systems:
+### Ubuntu:
 ```shell
-docker pull juanjqo/ubuntu_dev:amd64
 chmod +x run_container.sh 
-./run_container.sh ubuntu_dev juanjqo/ubuntu_dev:amd64
+./run_container.sh ubuntu_dev juanjqo/ubuntu_dev
 ```
 ---------------------------------------
 
