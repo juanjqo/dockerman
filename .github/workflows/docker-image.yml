@@ -32,7 +32,7 @@ jobs:
             if: matrix.os == 'ubuntu-latest'
             id: build_amd64
             run: |
-             docker build -t ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:amd64 images/ubuntu_dev/Dockerfile
+             docker build -t ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:amd64 .images/ubuntu_dev/Dockerfile
              docker save ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:amd64 -o ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}-amd64.tar
 
           - name: Upload amd64 image
@@ -47,7 +47,7 @@ jobs:
             if: matrix.os == 'ubuntu-24.04-arm'
             id: build_arm64
             run: |
-             docker build -t ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:arm64 images/ubuntu_dev/Dockerfile
+             docker build -t ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:arm64 .images/ubuntu_dev/Dockerfile
              docker save ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:arm64 -o /tmp/${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}-arm64.tar
 
           - name: Upload arm64 image
