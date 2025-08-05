@@ -33,7 +33,7 @@ jobs:
             id: push_amd64
             uses: docker/build-push-action@v6
             with:
-              push: false
+              push: True
               file: images/ubuntu_dev/Dockerfile
               tags: ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:temp-amd64
               
@@ -42,7 +42,7 @@ jobs:
             id: push_arm64
             uses: docker/build-push-action@v6
             with:
-              push: false
+              push: True
               file: images/ubuntu_dev/Dockerfile
               tags: ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:temp-arm64   
 
@@ -68,5 +68,15 @@ jobs:
             --amend ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:temp-arm64
 
           docker manifest push ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+          
+      - name: Delete temp tags from Docker Hub
+        run: |
+          curl -s -X DELETE \
+            -u "${{ vars.DOCKER_USERNAME }}:${{ secrets.DOCKER_PASSWORD }}" \
+            https://hub.docker.com/v2/repositories/${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}/tags/temp-amd64/
+          
+          curl -s -X DELETE \
+            -u "${{ vars.DOCKER_USERNAME }}:${{ secrets.DOCKER_PASSWORD }}" \
+            https://hub.docker.com/v2/repositories/${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}/tags/temp-arm64/    
 
               
