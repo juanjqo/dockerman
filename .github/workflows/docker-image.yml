@@ -17,6 +17,12 @@ jobs:
     runs-on: ${{ matrix.os }}      
 
     steps:
+          - name: Checkout repository
+            uses: actions/chekcout@v4
+
+          - name: Create output folder
+            run: mkdir -p output
+          
           - name: Log in to Docker Hub
             uses: docker/login-action@v3
             with:
@@ -36,7 +42,7 @@ jobs:
               push: False
               file: images/ubuntu_dev/Dockerfile
               tags: ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:amd64
-              outputs: type=docker, dest=./${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}-amd64.tar
+              outputs: type=docker, dest=./output/${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}-amd64.tar
 
           - name: Upload amd64 image
             if: matrix.os == 'ubuntu-latest'
@@ -44,7 +50,8 @@ jobs:
             uses: actions/upload-artifact@v4
             with:
               name: ${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:amd64
-              path: ./${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}-amd64.tar 
+              path: ./output/${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}-amd64.tar 
+              retention-days:  1
 
 
           
