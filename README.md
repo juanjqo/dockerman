@@ -35,7 +35,8 @@ chmod +x run_container.sh
 ```
 ---------------------------------------
 
-### Instructions for local tests
+
+<details><summary>Instructions for local tests</summary>
 
 Clone and build:
 
@@ -56,4 +57,5 @@ chmod +x run_container.sh
 ```shell
 sh run_container.sh ubuntu_dev ubuntu_dev
 ```
+</details>
 
