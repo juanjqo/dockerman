@@ -1,15 +1,20 @@
 #!/bin/bash
 cat << 'EOF' >> /etc/bash_env
 buildme() {
-    echo "→ Creating build directory...";
-    mkdir -p build && cd build || { echo "❌ Failed to enter build/"; return 1; };
-    echo "→ Running CMake...";
-    cmake .. || { echo "❌ CMake failed!"; return 1; };
-    echo "→ Compiling with $(nproc) cores...";
-    make -j$(nproc) || { echo "❌ Make failed!"; return 1; };
-    echo "→ Installing...";
-    make install || { echo "❌ Installation failed!"; return 1; };
-    echo "✅ Build complete!";
+    # Based on https://cliutils.gitlab.io/modern-cmake/chapters/intro/running.html
+    local build_type="${1:-Release}"
+
+    echo "→ Creating build directory and configuring with CMake..."
+    cmake -S . -B build \
+        -DCMAKE_BUILD_TYPE="$build_type" || { echo "❌ CMake configuration failed!"; return 1; }
+
+    echo "→ Building with $(nproc) cores (Build Type: $build_type)..."
+    cmake --build build --parallel $(nproc) || { echo "❌ Build failed!"; return 1; }
+
+    echo "→ Installing..."
+    sudo cmake --install build || { echo "❌ Installation failed!"; return 1; }
+
+    echo "✅ Build complete!"
 }
 cleanbuild() {
     echo "→ Navigating to build directory...";
