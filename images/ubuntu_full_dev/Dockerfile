@@ -79,6 +79,4 @@ RUN bash -c '~/git/rap2025_wholebodycontrol/dependencies/install_robot_constrain
 
 RUN echo "source /etc/bash_env" >> ~/.bashrc
 
-# To prevent compilation erros with Pybind11
-RUN ln -s /usr/include/eigen3/Eigen /usr/include/Eigen
-RUN ldconfig
+
