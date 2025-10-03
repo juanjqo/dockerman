@@ -45,7 +45,7 @@ RUN chmod +x ~/git/dockerman/scripts/custom_functions.sh
 RUN bash -c '~/git/dockerman/scripts/custom_functions.sh'
 
 # Clone docker_recipes
- RUN mkdir -p ~/git/ && cd ~/git/ && git clone https://github.com/Adorno-Lab/docker_recipes.git --recursive
+# RUN mkdir -p ~/git/ && cd ~/git/ && git clone https://github.com/Adorno-Lab/docker_recipes.git --recursive
 
 
 # Setting QtCreator
